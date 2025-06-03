@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Price Summary</title>
+</head>
+<body>
+    <h2>Loggedin User: {{request.user.username}} | {{request.user.email}}</h2>
+    <hr/>
+    <h2>Product Price Summary</h2>
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Product</th>
+            <th>Price (€)</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.product.name }}</td>
+            <td>{{ product.product.price }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.total_price}}</td>
+            <td>
+                <form method="POST" action="{% url 'delete_product' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this product?');">
+                        Delete
+                    </button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" action="{% url 'edit_product_user_detail' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit">
+                        Update
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <th>Total</th>
+            <th></th>
+            <th></th>
+            <th>{{ total_price }}</th>
+        </tr>
+    </table>
+    <br/><br/>
+    <form method="GET" action="{% url 'create-product-user' %}">
+        <button type="submit">
+            Back
+        </button>
+    </form>
+</body>
+</html>

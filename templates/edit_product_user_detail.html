@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product User Detail</title>
+</head>
+<body>
+    <h2>Loggedin User: {{request.user.username}} | {{request.user.email}}</h2>
+    <hr/>
+    <h2>Edit Product for {{ request.user.username }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="product">Product:</label>
+        <input type="hidden" name="product" value="{{ detail.product.id }}">
+        <select disabled>
+            {% for product in products %}
+                <option value="{{ product.id }}" {% if product.id == detail.product.id %}selected{% endif %}>
+                    {{ product.name }} - €{{ product.price }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="quantity">Quantity:</label>
+        <select name="quantity">
+            {% for i in quantity_range %}
+                <option value="{{ i }}" {% if i == detail.quantity %}selected{% endif %}>{{ i }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

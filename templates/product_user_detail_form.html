@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Products</title>
+</head>
+<body>
+    <h2>Loggedin User: {{request.user.username}} | {{request.user.email}}</h2>
+    {% if request.user.is_superuser %}
+    <form method="GET" action="{% url 'export_user_products' %}">
+        <button type="submit">
+            Generate Excel
+        </button>
+    </form>
+    {% endif %}
+
+    <hr/>
+    <h2>Select Product and Quantities</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>Product</th>
+                <th>Price (€)</th>
+                <th>Quantity</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>
+                    <input type="number" name="quantity_{{ product.id }}" min="0", max="10">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+<br/>
+    <form method="GET" action="{% url 'order_summary_view' %}">
+        <button type="submit">
+            Review My Orders
+        </button>
+    </form>
+</body>
+</html>

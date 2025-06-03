@@ -1,0 +1,1 @@
+web: gunicorn balaji_proj.wsgi
