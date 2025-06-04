@@ -6,6 +6,7 @@
 <body>
     <h2>Loggedin User: {{request.user.username}} | {{request.user.email}}</h2>
     <hr/>
+    <center>
     <h2>Edit Product for {{ request.user.username }}</h2>
     <form method="POST">
         {% csrf_token %}
@@ -26,7 +27,8 @@
             {% endfor %}
         </select><br><br>
 
-        <button type="submit">Update</button>
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Update</button>
     </form>
+        </center>
 </body>
 </html>

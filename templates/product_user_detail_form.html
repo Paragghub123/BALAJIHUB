@@ -14,7 +14,15 @@
     {% endif %}
 
     <hr/>
-    <h2>Select Product and Quantities</h2>
+    <center>
+    <h2>Select Product and Quantities </h2>
+
+    <form method="GET" action="{% url 'order_summary_view' %}">
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            View My Orders
+        </button>
+    </form>
+<br/>
     <form method="POST">
         {% csrf_token %}
         <table border="1" cellpadding="10">
@@ -34,14 +42,15 @@
             {% endfor %}
         </table>
         <br>
-        <button type="submit">Submit</button>
+            <button type="submit" style="background-color: #007BFF; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Submit</button>
     </form>
 
 <br/>
-    <form method="GET" action="{% url 'order_summary_view' %}">
-        <button type="submit">
-            Review My Orders
-        </button>
-    </form>
+<br/>
+
+<br/>
+
+<br/>
+    </center>
 </body>
 </html>

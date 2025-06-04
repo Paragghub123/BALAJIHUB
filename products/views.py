@@ -85,7 +85,7 @@ def export_user_product_details_xls(request):
         product_list = ProductDetail.objects.all()
 
         # Header row
-        ws.append(["Product Name", "Product Price"] + list(user_lst.values_list('username',flat=True)))
+        ws.append(["Product Name", "Product Price", "Total Quantity"] + list(user_lst.values_list('username',flat=True)))
 
         for product in product_list:
             prod_lst=[]
@@ -95,7 +95,8 @@ def export_user_product_details_xls(request):
                     prod_lst.append(f'{product_detail.product.price} * {product_detail.quantity} = {product_detail.total_price}')
                 except Exception:
                     prod_lst.append(0)
-            ws.append([product.name,product.price] + prod_lst)
+            total_quantity = ProductUserDetail.objects.filter(product__name=product.name).aggregate(total_sum=Sum('quantity'))
+            ws.append([product.name,product.price,total_quantity.get('total_sum')] + prod_lst)
 
         net_count = []
         for usr in user_lst:
