@@ -110,3 +110,50 @@ def export_user_product_details_xls(request):
         wb.save(response)
         return response
     return HttpResponse('Permission denied!!')
+
+@login_required
+def add_product(request):
+    if request.user.is_superuser:
+        products = [
+            {"BALAJI NAMKEEN Chana Dal": 1.60},
+            {"BALAJI Mung Dal": 1.60},
+            {"BALAJI Tikha Mitha Mix 190gm": 1.60},
+            {"BALAJI Ratlami Sev 190gm": 1.60},
+            {"BALAJI Aloo Sev 190gm": 1.60},
+            {"BALAJI Classic Sev 400gm": 2.95},
+            {"BALAJI Aloo Sev 400gm": 2.95},
+            {"BALAJI Ratlami Sev 400gm": 2.95},
+            {"BALAJI Gathiya": 2.30},
+            {"BALAJI Masala Sev Mamra": 2.00},
+            {"BALAJI Sev Mamra": 2.00},
+            {"BALAJI Bhel Mix Mamra": 2.00},
+            {"BALAJI Chat Chaska Wafer": 1.75},
+            {"BALAJI Tomato Twist Wafer": 1.75},
+            {"BALAJI Simply Salted Wafer": 1.75},
+            {"BALAJI Rumble Wafer": 1.75},
+            {"BALAJI Masala Masti Wafer": 1.75},
+            {"BALAJI Banana Wafers Karibana": 2.00},
+            {"BALAJI Banana Wafers Mast Mari": 2.00},
+            {"BALAJI Banana Wafers Mast Masala": 2.00},
+            {"BALAJI Chataka Pataka Masala Masti": 0.80},
+            {"BALAJI Chataka Pataka Flaming Hot": 0.80},
+            {"BALAJI Chataka Pataka Tomato": 0.80},
+            {"Good Day Biscuit": 2.30},
+            {"BALAJI Tikha Mitha Mix 400gm": 2.95},
+            {"BALAJI Khatta Mitha Mix": 2.95},
+            {"BALAJI Farali Chevdo": 3.20},
+            {"BALAJI Pop Ring": 0.90},
+            {"BALAJI Wheels": 0.90},
+            {"BALAJI Khakhra Methi": 1.40},
+            {"BALAJI Khakhra Plain": 1.40},
+            {"BALAJI Khakhra Masala": 1.40},
+            {"BALAJI Khakhra Jeera": 1.40},
+            {"Ol' Tymes Basmati Murmura": 3.99}
+        ]
+        for data in products:
+            for prod,price in data.items():
+                try:
+                    ProductDetail.objects.get(name=prod)
+                except Exception as e:
+                    ProductDetail.objects.create(name=prod,price=price)
+    return HttpResponse('Data Added Successfully!!')
